@@ -7,8 +7,15 @@ use App\Http\Controllers\Controller;
 
 class MeController extends Controller
 {
-    public function __invoke()
+    public function __construct()
     {
-        dd('hello');
+        $this->middleware(['auth:api']);
+    }
+
+    public function __invoke(Request $request)
+    {
+        $data = $request->user();
+
+        return response()->json(compact('data'));
     }
 }
