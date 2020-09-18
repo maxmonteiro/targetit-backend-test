@@ -1,11 +1,25 @@
 ## Introdução
-
+O teste é um sistema para gerenciamento e controle de agendamento de salas de reunião. Desenvolvido em PHP com Laravel 5.7, 
+utilizando JWT Auth para autenticação e o framework Vue.js no front-end.
 
 ## Requisitos
-
+- PHP >= 7.1.3
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Mbstring PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
+- Ctype PHP Extension
+- JSON PHP Extension
+- BCMath PHP Extension
+- fileinfo PHP Extension
 
 ## Instalação
 - Clone o projeto
+- Instale o projeto
+```
+composer install
+```
 - Copie o arquivo .env.example e renomeie para .env
 - Configure a conexão com o banco no arquivo .env
 - Gere uma chave para o projeto
