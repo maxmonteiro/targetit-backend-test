@@ -30,3 +30,7 @@ php artisan key:generate
 ```
 php artisan jwt:secret
 ```
+- Execute as migrations
+```
+php artisan migrate
+```
