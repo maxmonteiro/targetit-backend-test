@@ -32,16 +32,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create([
+        /* $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'phone' => $request['phone'],
             'sector_id' => $request['sector_id'],
             'master' => $request['master'],
-        ]);
+        ]); */
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->phone = $request->input('phone');
+        $user->sector_id = $request->input('sector_id');
+        $user->master = $request->input('master');
 
-        return new UserResource($user);
+        if ($user->save()) {
+            $user->sector;
+            return new UserResource($user);
+        }
     }
 
     /**
@@ -73,6 +83,7 @@ class UserController extends Controller
         $user->master = $request->input('master');
 
         if ($user->save()) {
+            $user->sector;
             return new UserResource($user);
         }
     }

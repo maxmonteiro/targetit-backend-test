@@ -18,7 +18,7 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.phone }}</td>
                 <td>{{ user.email }}</td>
-                <td>Setor A</td>
+                <td>{{ user.sector.name }}</td>
                 <td>
                     <span class="btn-span mr-3 text-primary" data-toggle="modal" data-target="#addNew" @click="editModal(user)">
                         <i class="fa fa-edit"></i>
@@ -55,12 +55,12 @@
           <form @submit.prevent="!editMode ? createUser() : updateUser()">
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="text" name="name" class="form-control" placeholder="Nome completo"
+                    <input type="text" name="name" class="form-control" placeholder="Nome completo" autofocus required
                         v-model="form.name"
                     />
                 </div>
                 <div class="form-group">
-                    <input type="text" name="email" class="form-control" placeholder="E-mail"
+                    <input type="text" name="email" class="form-control" placeholder="E-mail" required
                         v-model="form.email"
                     />
                 </div>
