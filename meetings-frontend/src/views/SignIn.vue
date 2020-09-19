@@ -44,15 +44,15 @@ export default {
     }
   },
   methods: {
-    async submit() {
+    submit() {
       let obj = this.form
-      let res = this.$http.post('api/auth/signin', obj)
-      /* .then(({data}) => {
-        console.log('res', data)
+      this.$http.post('api/auth/signin', obj)
+      .then(({data}) => {
+        localStorage.setItem('access_token', data.token)
+        this.$router.push('/');
       }).catch((err) => {
         console.log(err)
-      }); */
-      console.log(res)
+      });
     }
   }
 }

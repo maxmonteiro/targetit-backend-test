@@ -19,7 +19,7 @@
                     <span class="text-light">Máximo Henrique</span>
                 </li>
                 <li class="nav-item mr-2 text-nowrap">
-                    <a class="nav-link" href="#">Sair</a>
+                    <a class="nav-link" href="#" @click.prevent="logout">Sair</a>
                 </li>
             </ul>
         </nav>
@@ -59,7 +59,15 @@
 
 <script>
 export default {
-    
+    data() {
+        return {}
+    },
+    methods: {
+        logout() {
+            localStorage.removeItem('access_token')
+            this.$router.push('/signin');
+        }
+    }
 }
 </script>
 
