@@ -15,10 +15,10 @@
                     <th scope="row">{{ local.id }}</th>
                     <td>{{ local.name }}</td>
                     <td>
-                        <span class="btn-span mr-3 text-primary" data-toggle="modal" data-target="#addNew" @click="editModal(user)">
+                        <span class="btn-span mr-3 text-primary" data-toggle="modal" data-target="#addNew" @click="editModal(local)">
                             <i class="fa fa-edit"></i>
                         </span>
-                        <span class="btn-span text-danger" @click="deleteLocal(user)">
+                        <span class="btn-span text-danger" @click="deleteLocal(local)">
                             <i class="fa fa-close"></i>
                         </span>
                     </td>
@@ -44,48 +44,17 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addNewLabel">{{ !editMode ? 'Novo Usuário' : 'Editar Usuário' }}</h5>
+            <h5 class="modal-title" id="addNewLabel">{{ !editMode ? 'Novo Local' : 'Editar Local' }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form @submit.prevent="!editMode ? createUser() : updateUser()">
+          <form @submit.prevent="!editMode ? createLocal() : updateLocal()">
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="text" name="name" class="form-control" placeholder="Nome completo" autofocus required
+                    <input type="text" name="name" class="form-control" placeholder="Descrição" autofocus required
                         v-model="form.name"
                     />
-                </div>
-                <div class="form-group">
-                    <input type="text" name="email" class="form-control" placeholder="E-mail" required
-                        v-model="form.email"
-                    />
-                </div>
-                <div v-show="!editMode" class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="Senha"
-                        v-model="form.password"
-                    />
-                </div>
-                <div class="form-group">
-                    <input type="text" name="phone" class="form-control" placeholder="(86)99999-9999"
-                        v-model="form.phone"
-                    />
-                </div>
-                <div class="form-group">
-                    <select type="text" name="sector_id" class="form-control"
-                        v-model="form.sector_id"
-                    >
-                      <option value="">Selecione um setor</option>
-                      <option v-for="sector in sectors" :key="sector.id" :value="sector.id">{{ sector.name }}</option>
-                    </select>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="master" id="exampleRadios1" value="1"
-                        v-model="form.master"
-                    />
-                    <label class="form-check-label" for="master">
-                        Usuário MASTER
-                    </label>
                 </div>
             </div>
             <div class="modal-footer">
