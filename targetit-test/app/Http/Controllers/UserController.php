@@ -66,15 +66,15 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->update([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'sector_id' => $request['sector_id'],
-            'master' => $request['master'],
-        ]);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->phone = $request->input('phone');
+        $user->sector_id = $request->input('sector_id');
+        $user->master = $request->input('master');
 
-        return new UserResource($user);
+        if ($user->save()) {
+            return new UserResource($user);
+        }
     }
 
     /**

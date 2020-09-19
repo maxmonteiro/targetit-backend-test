@@ -75,13 +75,11 @@
                     />
                 </div>
                 <div class="form-group">
-                    <select type="text" name="type" class="form-control"
+                    <select type="text" name="sector_id" class="form-control"
                         v-model="form.sector_id"
                     >
                       <option value="">Selecione um setor</option>
-                      <option value="admin">Admin</option>
-                      <option value="user">Standard User</option>
-                      <option value="author">Sector B</option>
+                      <option v-for="sector in sectors" :key="sector.id" :value="sector.id">{{ sector.name }}</option>
                     </select>
                 </div>
                 <div class="form-check">
@@ -119,6 +117,7 @@ export default {
                 sector_id: '',
                 master: false
             },
+            sectors: [],
             master: false,
             showModal: false,
             editMode: false
@@ -127,6 +126,7 @@ export default {
     mounted() {
         this.getUsers()
         this.checkUserMaster()
+        this.getSectors()
     },
     methods: {
         getUsers() {
@@ -144,6 +144,14 @@ export default {
                 if (user.master) {
                     this.master = true
                 }
+            }).catch((err) => {
+                console.log(err)
+            });
+        },
+        getSectors() {
+            axios.get('api/sectors')
+            .then(({data}) => {
+                this.sectors = data.data
             }).catch((err) => {
                 console.log(err)
             });
