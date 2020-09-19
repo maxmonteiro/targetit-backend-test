@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'signin',
   data() {
@@ -43,23 +44,28 @@ export default {
   },
   methods: {
     submit() {
+      var app = this
       let obj = this.form
-      this.$http.post('api/auth/signin', obj)
+      axios.post('api/auth/signin', obj)
       .then(({data}) => {
+        // Save token
         localStorage.setItem('access_token', data.token)
-        this.getUser()
-        this.$router.push('/');
+        // Set header
+        axios.defaults.headers.common["Authorization"] = 'Bearer ' + data.token
+        axios.get('api/auth/me')
+        .then(({data}) => {
+            console.log('user', data)
+            localStorage.setItem('user_name', data.data.name)
+        }).catch((err) => {
+            console.log(err)
+        });
+        setTimeout(function() {
+          app.$router.push('/')
+          location.reload();
+        }, 600)
       }).catch((err) => {
         console.log(err)
         this.showError = true
-      });
-    },
-    getUser() {
-      this.$http.get('api/auth/me')
-      .then(({data}) => {
-        console.log('usuario', data)
-      }).catch((err) => {
-        console.log(err)
       });
     }
   }

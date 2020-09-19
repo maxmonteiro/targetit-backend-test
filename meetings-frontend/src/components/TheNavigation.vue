@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <nav :style="this.$route.name == 'signin' ? 'display: none!important;' : ''" class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
             <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company name</a>
             <button
                 class="navbar-toggler position-absolute d-md-none collapsed "
@@ -18,7 +18,7 @@
                 class="navbar-nav d-flex flex-row bd-highlight"
             >
                 <li class="nav-item mr-4 pl-3" style="align-self: center;">
-                    <span class="text-light">Olá, {{ user.name }}</span>
+                    <span class="text-light">Olá, {{ userName }}</span>
                 </li>
                 <li class="nav-item mr-2 text-nowrap">
                     <a class="nav-link" href="#" @click.prevent="logout">Sair</a>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -73,23 +74,22 @@ export default {
     computed: {
         currentPage() {
             return this.$route.name
+        },
+        userName() {
+            return localStorage.getItem('user_name')
         }
     },
     mounted() {
-        var token = localStorage.getItem('access_token')
-        if (token) {
-            this.$http.get('api/auth/me')
-            .then(({data}) => {
-                console.log('user', data)
-                this.user = data.data
-            }).catch((err) => {
-                console.log(err)
-            });
-        }
+        
     },
     methods: {
         logout() {
+            // Remove token
             localStorage.removeItem('access_token')
+            // Remove user name
+            localStorage.removeItem('user_name')
+            // Remove header
+            axios.defaults.headers.common = {}
             this.$router.push('/signin');
         }
     }

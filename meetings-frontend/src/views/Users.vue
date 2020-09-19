@@ -20,7 +20,7 @@
                 <td>{{ user.email }}</td>
                 <td>Setor A</td>
                 <td>
-                    <span class="btn-span mr-3 text-primary">
+                    <span class="btn-span mr-3 text-primary" data-toggle="modal" data-target="#addNew" @click="editModal(user)">
                         <i class="fa fa-edit"></i>
                     </span>
                     <span class="btn-span text-danger">
@@ -30,47 +30,165 @@
             </tr>
         </tbody>
     </table>
-    <button v-show="master" class="btn btn-primary">
+    <button v-show="master" class="btn btn-primary" data-toggle="modal" data-target="#addNew" @click.prevent="newModal">
         <span><i class="fa fa-plus"></i></span>
         Novo usuário
     </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="addNew"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addNewLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addNewLabel">{{ !editMode ? 'Novo Usuário' : 'Editar Usuário' }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form @submit.prevent="!editMode ? createUser() : updateUser()">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Nome completo"
+                        v-model="form.name"
+                    />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="email" class="form-control" placeholder="E-mail"
+                        v-model="form.email"
+                    />
+                </div>
+                <div v-show="!editMode" class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Senha"
+                        v-model="form.password"
+                    />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="phone" class="form-control" placeholder="(86)99999-9999"
+                        v-model="form.phone"
+                    />
+                </div>
+                <div class="form-group">
+                    <select type="text" name="type" class="form-control"
+                        v-model="form.sector_id"
+                    >
+                      <option value="">Selecione um setor</option>
+                      <option value="admin">Admin</option>
+                      <option value="user">Standard User</option>
+                      <option value="author">Sector B</option>
+                    </select>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="master" id="exampleRadios1" value="1"
+                        v-model="form.master"
+                    />
+                    <label class="form-check-label" for="master">
+                        Usuário MASTER
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </template>
-
 <script>
+import axios from 'axios'
 export default {
-  name: 'users',
-  data() {
-    return {
-        users: [],
-        master: false
+    name: 'users',
+    data() {
+        return {
+            users: [],
+            form: {
+                name: '',
+                email: '',
+                password: '',
+                phone: '',
+                sector_id: '',
+                master: false
+            },
+            master: false,
+            showModal: false,
+            editMode: false
+        }
+    },
+    mounted() {
+        this.getUsers()
+        this.checkUserMaster()
+    },
+    methods: {
+        getUsers() {
+            axios.get('api/users')
+            .then(({data}) => {
+                this.users = data.data
+            }).catch((err) => {
+                console.log(err)
+            });
+        },
+        checkUserMaster() {
+            axios.get('api/auth/me')
+            .then(({data}) => {
+                let user = data.data
+                if (user.master) {
+                    this.master = true
+                }
+            }).catch((err) => {
+                console.log(err)
+            });
+        },
+        newModal() {
+            this.editMode = false
+            this.form = {
+                name: '',
+                email: '',
+                password: '',
+                phone: '',
+                sector_id: '',
+                master: false
+            }
+            this.showModal = true
+            //$('#addNew').modal('show')
+        },
+        editModal(user) {
+            this.editMode = true;
+            this.form = {
+                name: '',
+                email: '',
+                password: '',
+                phone: '',
+                sector_id: '',
+                master: false
+            }
+            //$('#addNew').modal('show')
+            this.form = user
+        },
+        createUser() {
+            let obj = this.form
+            axios.post('api/users', obj)
+            .then(({data}) => {
+                console.log('gravado', data)
+                this.users.push(data.data)
+                document.getElementById("closeModal").click()
+            }).catch((err) => {
+                console.log(err)
+            });
+        },
+        updateUser() {
+
+        }
     }
-  },
-  mounted() {
-      this.getUsers()
-      this.checkUserMaster()
-  },
-  methods: {
-      getUsers() {
-          this.$http.get('api/users')
-          .then(({data}) => {
-              this.users = data.data
-          }).catch((err) => {
-              console.log(err)
-          });
-      },
-      checkUserMaster() {
-          this.$http.get('api/auth/me')
-          .then(({data}) => {
-              let user = data.data
-              if (user.master) {
-                  this.master = true
-              }
-          }).catch((err) => {
-              console.log(err)
-          });
-      }
-  }
 }
 </script>
 

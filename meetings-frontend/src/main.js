@@ -2,19 +2,23 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
-//import { HTTP } from './http-common';
 
 Vue.config.productionTip = false
 
-const axiosBase = axios.create({
-  baseURL: 'http://127.0.0.1:8000/',
-  headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('access_token')
-  }
-})
+// Set the base url
+const baseURL = 'http://127.0.0.1:8000/';
+axios.defaults.baseURL = baseURL;
 
-Vue.prototype.$http = axiosBase;
-Vue.prototype.$loggedUser = {};
+// Set header if token exists
+if (localStorage.getItem('access_token')) {
+  axios.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem('access_token')
+} else {
+  axios.defaults.headers.common = {}
+}
+
+window.axios = axios;
+
+Vue.prototype.$user = {}
 
 new Vue({
   router,
