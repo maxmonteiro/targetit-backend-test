@@ -47,10 +47,19 @@ export default {
       this.$http.post('api/auth/signin', obj)
       .then(({data}) => {
         localStorage.setItem('access_token', data.token)
-        this.$router.push('/');
+        this.getUser()
+        //this.$router.push('/');
       }).catch((err) => {
         console.log(err)
         this.showError = true
+      });
+    },
+    getUser() {
+      this.$http.get('api/auth/me')
+      .then(({data}) => {
+        console.log('usuario', data)
+      }).catch((err) => {
+        console.log(err)
       });
     }
   }

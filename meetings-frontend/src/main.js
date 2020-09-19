@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 const axiosBase = axios.create({
   baseURL: 'http://127.0.0.1:8000/',
   headers: {
-    Authorization: 'Bearer {token}'
+    Authorization: 'Bearer ' + localStorage.getItem('access_token')
   }
 })
 

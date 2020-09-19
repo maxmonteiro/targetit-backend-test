@@ -7,8 +7,10 @@
 <script>
 export default {
   name: 'users',
-  components: {
-    
+  data() {
+    return {
+        
+    }
   }
 }
 </script>
