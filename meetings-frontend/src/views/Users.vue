@@ -1,37 +1,40 @@
 <template>
   <div class="col-md-12">
     <h2>Usuários</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome completo</th>
-                <th scope="col">Telefone</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Setor</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="user in users" :key="user.id">
-                <th scope="row">{{ user.id }}</th>
-                <td>{{ user.name }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.sector.name }}</td>
-                <td>
-                    <span class="btn-span mr-3 text-primary" data-toggle="modal" data-target="#addNew" @click="editModal(user)">
-                        <i class="fa fa-edit"></i>
-                    </span>
-                    <span class="btn-span text-danger" @click="deleteUser(user)">
-                        <i class="fa fa-close"></i>
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome completo</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Setor</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in users" :key="user.id">
+                    <th scope="row">{{ user.id }}</th>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.sector.name }}</td>
+                    <td>
+                        <span class="btn-span mr-3 text-primary" data-toggle="modal" data-target="#addNew" @click="editModal(user)">
+                            <i class="fa fa-edit"></i>
+                        </span>
+                        <span class="btn-span text-danger" @click="deleteUser(user)">
+                            <i class="fa fa-close"></i>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
     <button v-show="master" class="btn btn-primary" data-toggle="modal" data-target="#addNew" @click.prevent="newModal">
-        <span><i class="fa fa-plus"></i></span>
+        <span><i class="fa fa-plus pr-2"></i></span>
         Novo usuário
     </button>
 
