@@ -1,10 +1,10 @@
 <template>
   <div class="col-md-12">
-    <form class="col-md-4 text-center m-auto" 
-      @submit="submit"
+    <form class="col-md-3 text-center m-auto" 
+      @submit.prevent="submit"
     >
-      <img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">Digite seus dados de acesso</h1>
+      <h2>Login</h2>
+      <h4 class="h4 mb-3 font-weight-normal">Digite seus dados de acesso</h4>
 
       <label for="inputEmail" class="sr-only">
         Endereço de e-mail
@@ -44,8 +44,15 @@ export default {
     }
   },
   methods: {
-    submit() {
-
+    async submit() {
+      let obj = this.form
+      let res = this.$http.post('http://127.0.0.1:8000/api/auth/signin', obj)
+      /* .then(({data}) => {
+        console.log('res', data)
+      }).catch((err) => {
+        console.log(err)
+      }); */
+      console.log(res)
     }
   }
 }
