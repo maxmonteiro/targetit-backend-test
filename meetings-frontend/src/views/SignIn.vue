@@ -23,7 +23,7 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Entrar
       </button>
-
+      <p v-show="showError" class="mt-2 text-danger">E-mail/senha inválidos</p>
       <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
     </form>
   </div>
@@ -32,15 +32,13 @@
 <script>
 export default {
   name: 'signin',
-  components: {
-    
-  },
   data() {
     return {
       form: {
         email: '',
         password: ''
-      }
+      },
+      showError: false
     }
   },
   methods: {
@@ -52,6 +50,7 @@ export default {
         this.$router.push('/');
       }).catch((err) => {
         console.log(err)
+        this.showError = true
       });
     }
   }
