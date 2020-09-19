@@ -21,5 +21,18 @@ class DatabaseSeeder extends Seeder
             'phone' => '(86)99999-9999',
             'master' => true
         ]);
+
+        DB::table('sectors')->insert([
+            'name' => 'Admin'
+        ]);
+        DB::table('sectors')->insert([
+            'name' => 'Pessoal'
+        ]);
+        DB::table('sectors')->insert([
+            'name' => 'Financeiro'
+        ]);
+        DB::table('sectors')->insert([
+            'name' => 'Coordenação'
+        ]);
     }
 }

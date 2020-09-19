@@ -22,7 +22,10 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->boolean('master')->default(false);
             $table->rememberToken();
+            $table->integer('sector_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('sector_id')->references('id')->on('sectors');
         });
     }
 
