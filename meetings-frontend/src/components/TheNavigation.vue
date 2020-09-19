@@ -14,7 +14,9 @@
                 >
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <ul class="navbar-nav d-flex flex-row bd-highlight">
+            <ul :style="this.$route.name == 'signin' ? 'display: none!important;' : ''"
+                class="navbar-nav d-flex flex-row bd-highlight"
+            >
                 <li class="nav-item mr-4 pl-3" style="align-self: center;">
                     <span class="text-light">Máximo Henrique</span>
                 </li>
@@ -25,7 +27,9 @@
         </nav>
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <nav :style="this.$route.name == 'signin' ? 'display: none!important;' : ''"
+                    id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+                >
                     <div class="sidebar-sticky pt-3">
                         <ul class="nav flex-column">
                             <li class="nav-item">
@@ -46,7 +50,9 @@
                         </ul>
                     </div>
                 </nav>
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"
+                    :style="this.$route.name == 'signin' ? 'margin: 0 auto;' : ''"
+                >
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <router-view/>
                         
@@ -60,7 +66,14 @@
 <script>
 export default {
     data() {
-        return {}
+        return {
+            
+        }
+    },
+    computed: {
+        currentPage() {
+            return this.$route.name
+        }
     },
     methods: {
         logout() {
