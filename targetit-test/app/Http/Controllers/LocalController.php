@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Local;
+use App\Http\Resources\Local as LocalResource;
 
 class LocalController extends Controller
 {
@@ -13,7 +15,12 @@ class LocalController extends Controller
      */
     public function index()
     {
-        //
+        $locals = Local::all();
+        foreach ($locals as $value) {
+            $value->sector;
+        }
+
+        return LocalResource::collection($locals);
     }
 
     /**
@@ -24,7 +31,8 @@ class LocalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $local = Local::create($request->all());
+        return new LocalResource($local);
     }
 
     /**
@@ -35,7 +43,8 @@ class LocalController extends Controller
      */
     public function show($id)
     {
-        //
+        $local = Local::findOrFail($id);
+        return new LocalResource($local);
     }
 
     /**
@@ -47,7 +56,10 @@ class LocalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $local = Local::findOrFail($id);
+        $local->update($request->all());
+
+        return new LocalResource($local);
     }
 
     /**
@@ -58,6 +70,9 @@ class LocalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $local = Local::findOrFail($id);
+        $local->delete();
+
+        return new LocalResource($local);
     }
 }
