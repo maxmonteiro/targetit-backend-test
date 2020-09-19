@@ -14,6 +14,7 @@ const axiosBase = axios.create({
 })
 
 Vue.prototype.$http = axiosBase;
+Vue.prototype.$loggedUser = {};
 
 new Vue({
   router,

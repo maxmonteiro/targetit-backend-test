@@ -80,6 +80,7 @@ export default {
         if (token) {
             this.$http.get('api/auth/me')
             .then(({data}) => {
+                console.log('user', data)
                 this.user = data.data
             }).catch((err) => {
                 console.log(err)

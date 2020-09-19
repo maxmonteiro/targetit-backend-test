@@ -6,3 +6,5 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
     
     Route::get('me', 'MeController');
 });
+
+Route::apiResource('users', 'UserController');
