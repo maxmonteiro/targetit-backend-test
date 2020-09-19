@@ -18,7 +18,7 @@
                 class="navbar-nav d-flex flex-row bd-highlight"
             >
                 <li class="nav-item mr-4 pl-3" style="align-self: center;">
-                    <span class="text-light">Máximo Henrique</span>
+                    <span class="text-light">Olá, {{ user.name }}</span>
                 </li>
                 <li class="nav-item mr-2 text-nowrap">
                     <a class="nav-link" href="#" @click.prevent="logout">Sair</a>
@@ -67,12 +67,23 @@
 export default {
     data() {
         return {
-            
+            user: {}
         }
     },
     computed: {
         currentPage() {
             return this.$route.name
+        }
+    },
+    mounted() {
+        var token = localStorage.getItem('access_token')
+        if (token) {
+            this.$http.get('api/auth/me')
+            .then(({data}) => {
+                this.user = data.data
+            }).catch((err) => {
+                console.log(err)
+            });
         }
     },
     methods: {
