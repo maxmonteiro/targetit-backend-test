@@ -23,7 +23,7 @@
                     <span class="btn-span mr-3 text-primary" data-toggle="modal" data-target="#addNew" @click="editModal(user)">
                         <i class="fa fa-edit"></i>
                     </span>
-                    <span class="btn-span text-danger">
+                    <span class="btn-span text-danger" @click="deleteUser(user)">
                         <i class="fa fa-close"></i>
                     </span>
                 </td>
@@ -159,7 +159,6 @@ export default {
                 master: false
             }
             this.showModal = true
-            //$('#addNew').modal('show')
         },
         editModal(user) {
             this.editMode = true;
@@ -171,7 +170,6 @@ export default {
                 sector_id: '',
                 master: false
             }
-            //$('#addNew').modal('show')
             this.form = user
         },
         createUser() {
@@ -186,7 +184,23 @@ export default {
             });
         },
         updateUser() {
-
+            let obj = this.form
+            axios.put('api/users/' + obj.id, obj)
+            .then(({data}) => {
+                console.log('atualizado', data)
+                document.getElementById("closeModal").click()
+            }).catch((err) => {
+                console.log(err)
+            });
+        },
+        deleteUser(user) {
+            axios.delete('api/users/' + user.id)
+            .then(({data}) => {
+                console.log('excluido', data)
+                this.users.splice(this.users.indexOf(user), 1)
+            }).catch((err) => {
+                console.log(err)
+            });
         }
     }
 }

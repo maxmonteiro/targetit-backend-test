@@ -17,11 +17,10 @@
             <ul :style="this.$route.name == 'signin' ? 'display: none!important;' : ''"
                 class="navbar-nav d-flex flex-row bd-highlight"
             >
-                <li class="nav-item mr-4 pl-3" style="align-self: center;">
-                    <span class="text-light">Olá, {{ userName }}</span>
-                </li>
                 <li class="nav-item mr-2 text-nowrap">
-                    <a class="nav-link" href="#" @click.prevent="logout">Sair</a>
+                    <a class="nav-link" href="#" @click.prevent="logout">
+                        <i class="fa fa-sign-out pr-1"></i>Sair
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -37,11 +36,6 @@
                                     Home
                                 </router-link>
                             </li>
-                            <!-- <li class="nav-item">
-                                <router-link class="nav-link" :to="{ name: 'signin' }">
-                                    Entrar
-                                </router-link>
-                            </li> -->
                             <li class="nav-item">
                                 <router-link class="nav-link" :to="{ name: 'users' }">
                                     Usuários
@@ -54,6 +48,7 @@
                     :style="this.$route.name == 'signin' ? 'margin: 0 auto;' : ''"
                 >
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        
                         <router-view/>
                         
                     </div>
@@ -74,9 +69,6 @@ export default {
     computed: {
         currentPage() {
             return this.$route.name
-        },
-        userName() {
-            return localStorage.getItem('user_name')
         }
     },
     mounted() {

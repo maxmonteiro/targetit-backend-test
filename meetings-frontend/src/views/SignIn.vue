@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-12">
-    <form class="col-md-3 text-center m-auto" 
+    <form class="col-lg-4 col-md-8 text-center m-auto" 
       @submit.prevent="submit"
     >
       <h2>Login</h2>

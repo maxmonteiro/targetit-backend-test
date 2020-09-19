@@ -35,7 +35,7 @@ class UserController extends Controller
             'phone' => $request['phone'],
             'master' => $request['master'],
         ]);
-        
+
         return new UserResource($user);
     }
 
@@ -59,7 +59,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'master' => $request['master'],
+        ]);
+
+        return new UserResource($user);
     }
 
     /**
@@ -70,6 +78,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return new UserResource($user);
     }
 }
