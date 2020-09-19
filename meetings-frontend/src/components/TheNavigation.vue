@@ -32,11 +32,13 @@
                     <div class="sidebar-sticky pt-3">
                         <ul class="nav flex-column">
                             <li class="nav-item">
+                                <span><i class="fa fa-home text-primary"></i></span>
                                 <router-link class="nav-link" :to="{ name: 'home' }">
                                     Home
                                 </router-link>
                             </li>
                             <li class="nav-item">
+                                <span><i class="fa fa-user text-primary"></i></span>
                                 <router-link class="nav-link" :to="{ name: 'users' }">
                                     Usuários
                                 </router-link>
@@ -94,5 +96,12 @@ export default {
 }
 #sidebarMenu {
     height: calc(100vh - 48px);
+}
+.nav-item {
+    display: flex;
+}
+.nav-item span {
+    align-self: center;
+    width: 15px;
 }
 </style>
