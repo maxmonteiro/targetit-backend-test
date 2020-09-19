@@ -43,6 +43,12 @@
                                     Usuários
                                 </router-link>
                             </li>
+                            <li class="nav-item">
+                                <span><i class="fa fa-map-pin text-primary"></i></span>
+                                <router-link class="nav-link" :to="{ name: 'locals' }">
+                                    Locais
+                                </router-link>
+                            </li>
                         </ul>
                     </div>
                 </nav>
