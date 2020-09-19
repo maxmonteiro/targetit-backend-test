@@ -59,4 +59,8 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class);
+    }
 }
