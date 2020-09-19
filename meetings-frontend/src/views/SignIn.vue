@@ -46,7 +46,7 @@ export default {
   methods: {
     async submit() {
       let obj = this.form
-      let res = this.$http.post('http://127.0.0.1:8000/api/auth/signin', obj)
+      let res = this.$http.post('api/auth/signin', obj)
       /* .then(({data}) => {
         console.log('res', data)
       }).catch((err) => {

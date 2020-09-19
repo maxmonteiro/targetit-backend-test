@@ -6,14 +6,14 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
-/* axios.create({
+const axiosBase = axios.create({
   baseURL: 'http://127.0.0.1:8000/',
   headers: {
     Authorization: 'Bearer {token}'
   }
-}) */
+})
 
-Vue.prototype.$http = axios;
+Vue.prototype.$http = axiosBase;
 
 new Vue({
   router,
