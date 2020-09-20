@@ -84,7 +84,7 @@
 <script>
 import axios from 'axios'
 export default {
-    name: 'users',
+    name: 'locals',
     data() {
         return {
             locals: [],

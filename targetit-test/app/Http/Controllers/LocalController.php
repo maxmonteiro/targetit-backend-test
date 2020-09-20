@@ -18,6 +18,7 @@ class LocalController extends Controller
         $locals = Local::all();
         foreach ($locals as $value) {
             $value->sector;
+            $value->rooms;
         }
 
         return LocalResource::collection($locals);
@@ -44,6 +45,8 @@ class LocalController extends Controller
     public function show($id)
     {
         $local = Local::findOrFail($id);
+        $local->rooms;
+
         return new LocalResource($local);
     }
 
