@@ -56,25 +56,27 @@
                         v-model="form.name"
                     />
                 </div>
-                <h6>Salas</h6>
-                <div class="form-group form-row">
-                    <input type="text" name="room" class="form-control col-md-10 ml-1" placeholder="nova sala"
-                        v-model="room.name" 
-                    />
-                    <a href="" class="pl-2" style="align-self: center;">
-                        <span @click.prevent="addRoom">
-                            <i class="fa fa-plus pr-1"></i>incluir
-                        </span>
-                    </a>
+                <div v-show="editMode == true">
+                    <h6>Salas</h6>
+                    <div class="form-group form-row">
+                        <input type="text" name="room" class="form-control col-md-10 ml-1" placeholder="nova sala"
+                            v-model="room.name" 
+                        />
+                        <a href="" class="pl-2" style="align-self: center;">
+                            <span @click.prevent="addRoom">
+                                <i class="fa fa-plus pr-1"></i>incluir
+                            </span>
+                        </a>
+                    </div>
+                    <ul v-show="rooms.length > 0">
+                        <li v-for="room in rooms" :key="room.id">
+                            {{ room.name }}
+                            <span class="pl-1" @click="deleteRoom(room)">
+                                <i class="fa fa-close text-danger"></i>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
-                <ul v-show="rooms.length > 0">
-                    <li v-for="room in rooms" :key="room.id">
-                        {{ room.name }}
-                        <span class="pl-1" @click="deleteRoom(room)">
-                            <i class="fa fa-close text-danger"></i>
-                        </span>
-                    </li>
-                </ul>
             </div>
             <div class="modal-footer">
               <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal" @click.prevent="rooms = []">Fechar</button>
@@ -155,20 +157,39 @@ export default {
             });
         },
         deleteLocal(local) {
-            axios.delete('api/locals/' + local.id)
+            if (local.rooms.length > 0) {
+                alert('Não é possível excluir local. Existem salas associadas!')
+            } else {
+                axios.delete('api/locals/' + local.id)
+                .then(({data}) => {
+                    console.log('excluido', data)
+                    this.locals.splice(this.locals.indexOf(local), 1)
+                }).catch((err) => {
+                    console.log(err)
+                });
+            }
+            
+        },
+        addRoom() {
+            this.room.local_id = this.form.id
+            axios.post('api/rooms', this.room)
             .then(({data}) => {
-                console.log('excluido', data)
-                this.locals.splice(this.locals.indexOf(local), 1)
+                console.log('gravado', data.data)
+                this.room.name = ''
+                this.rooms.push(data.data)
             }).catch((err) => {
                 console.log(err)
             });
         },
-        addRoom() {
-            this.room.local_id = this.form.id
-        },
-        /* deleteRoom(room) {
-
-        } */
+        deleteRoom(room) {
+            axios.delete('api/rooms/' + room.id)
+            .then(({data}) => {
+                console.log('excluido', data.data)
+                this.rooms.splice(this.rooms.indexOf(room), 1)
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
     }
 }
 </script>
