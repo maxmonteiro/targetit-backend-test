@@ -19,6 +19,7 @@ if (localStorage.getItem('access_token')) {
 window.axios = axios;
 
 Vue.prototype.$user = {}
+Vue.prototype.$eventHub = new Vue();
 
 new Vue({
   router,

@@ -57,7 +57,7 @@
                 >
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         
-                        <router-view/>
+                        <router-view />
                         
                     </div>
                 </main>
@@ -80,9 +80,17 @@ export default {
         }
     },
     mounted() {
-        
+        this.$eventHub.$on('logged-in', this.getUser());
     },
     methods: {
+        getUser() {
+            axios.get('api/auth/me')
+            .then(({data}) => {
+                this.user = data.data
+            }).catch((err) => {
+                console.log(err)
+            });
+        },
         logout() {
             // Remove token
             localStorage.removeItem('access_token')

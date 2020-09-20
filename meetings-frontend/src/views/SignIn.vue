@@ -56,6 +56,7 @@ export default {
         .then(({data}) => {
             console.log('user', data)
             localStorage.setItem('user_name', data.data.name)
+            this.$eventHub.$emit('logged-in')
         }).catch((err) => {
             console.log(err)
         });
