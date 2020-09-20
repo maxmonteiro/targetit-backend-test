@@ -56,6 +56,19 @@
                         v-model="form.name"
                     />
                 </div>
+                <h6>Salas</h6>
+                <div class="form-group form-row">
+                    <input type="text" name="room" class="form-control col-md-10 ml-1" placeholder="nova sala" />
+                    <a href="" class="pl-2" style="align-self: center;">
+                        <span><i class="fa fa-plus pr-1"></i>incluir</span>
+                    </a>
+                </div>
+                <ul>
+                    <li>
+                        sala 01
+                        <span class="pl-1"><i class="fa fa-close text-danger"></i></span>
+                    </li>
+                </ul>
             </div>
             <div class="modal-footer">
               <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -145,5 +158,18 @@ export default {
 <style scoped>
 .btn-span {
     cursor: pointer;
+}
+.modal-body ul {
+    list-style: none;
+    max-height: 100px;
+    padding: 0;
+    overflow-y: auto;
+}
+.modal-body ul li {
+    cursor: pointer;
+    padding-left: 4px;
+}
+.modal-body ul li:hover {
+    background-color: #eee;
 }
 </style>
