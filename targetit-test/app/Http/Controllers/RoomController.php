@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Room as RoomResource;
+use App\Room;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -13,7 +15,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        $rooms = Room::all();
+        return RoomResource::collection($rooms);
     }
 
     /**
@@ -24,7 +27,13 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $room = new Room;
+        $room->name = $request->input('name');
+        $room->local_id = $request->input('local_id');
+
+        if ($room->save()) {
+            return new RoomResource($room);
+        }
     }
 
     /**
@@ -35,7 +44,8 @@ class RoomController extends Controller
      */
     public function show($id)
     {
-        //
+        $room = Room::findOrFail($id);
+        return new RoomResource($room);
     }
 
     /**
@@ -47,7 +57,13 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $room = Room::findOrFail($id);
+        $room->name = $request->input('name');
+        $room->local_id = $request->input('local_id');
+
+        if ($room->save()) {
+            return new RoomResource($room);
+        }
     }
 
     /**
@@ -58,6 +74,9 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $room = Room::findOrFail($id);
+        $room->delete();
+
+        return new RoomResource($room);
     }
 }

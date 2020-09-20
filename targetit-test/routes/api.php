@@ -10,3 +10,4 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
 Route::apiResource('users', 'UserController');
 Route::apiResource('sectors', 'SectorController');
 Route::apiResource('locals', 'LocalController');
+Route::apiResource('rooms', 'RoomController');
