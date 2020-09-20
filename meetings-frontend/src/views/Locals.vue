@@ -58,20 +58,26 @@
                 </div>
                 <h6>Salas</h6>
                 <div class="form-group form-row">
-                    <input type="text" name="room" class="form-control col-md-10 ml-1" placeholder="nova sala" />
+                    <input type="text" name="room" class="form-control col-md-10 ml-1" placeholder="nova sala"
+                        v-model="room.name" 
+                    />
                     <a href="" class="pl-2" style="align-self: center;">
-                        <span><i class="fa fa-plus pr-1"></i>incluir</span>
+                        <span @click.prevent="addRoom">
+                            <i class="fa fa-plus pr-1"></i>incluir
+                        </span>
                     </a>
                 </div>
-                <ul>
-                    <li>
-                        sala 01
-                        <span class="pl-1"><i class="fa fa-close text-danger"></i></span>
+                <ul v-show="rooms.length > 0">
+                    <li v-for="room in rooms" :key="room.id">
+                        {{ room.name }}
+                        <span class="pl-1" @click="deleteRoom(room)">
+                            <i class="fa fa-close text-danger"></i>
+                        </span>
                     </li>
                 </ul>
             </div>
             <div class="modal-footer">
-              <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal" @click.prevent="rooms = []">Fechar</button>
               <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
           </form>
@@ -90,6 +96,11 @@ export default {
             locals: [],
             form: {
                 name: ''
+            },
+            rooms: [],
+            room: {
+                name: '',
+                local_id: null
             },
             showModal: false,
             editMode: false
@@ -120,6 +131,7 @@ export default {
                 name: ''
             }
             this.form = local
+            this.rooms = local.rooms
         },
         createLocal() {
             let obj = this.form
@@ -150,7 +162,13 @@ export default {
             }).catch((err) => {
                 console.log(err)
             });
-        }
+        },
+        addRoom() {
+            this.room.local_id = this.form.id
+        },
+        /* deleteRoom(room) {
+
+        } */
     }
 }
 </script>
