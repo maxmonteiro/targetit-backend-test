@@ -7,7 +7,6 @@ import config from './config.js'
 Vue.config.productionTip = false
 
 // Set the base url
-//const baseURL = 'http://127.0.0.1:8000/';
 const baseURL = config.API_URL;
 axios.defaults.baseURL = baseURL;
 

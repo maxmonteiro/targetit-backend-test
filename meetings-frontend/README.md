@@ -8,11 +8,12 @@ Execute o comando para instalar as dependências do projeto.
 ```
 npm install
 ```
-
+A url padrão da api é ```http://127.0.0.1:8000/```
+caso queira mudar, altere a variável url no arquivo ```src/config.js```
 
 ## Compilando
 ### Local
-Execute o comando para rodar e acessar o sistema localmente.
+Execute o comando para rodar e acessar o sistema localmente através da url informada no terminal.
 ```
 npm run serve
 ```
