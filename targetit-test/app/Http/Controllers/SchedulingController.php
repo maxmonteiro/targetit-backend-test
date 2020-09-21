@@ -23,6 +23,17 @@ class SchedulingController extends Controller
         return SchedulingResource::collection($schedulings);
     }
 
+    public function schedulingsDay(Request $request)
+    {
+        $date = $request->input('date_scheduling');
+        $schedulings = Scheduling::where('date_scheduling', $date)->get();
+        foreach ($schedulings as $value) {
+            $value->room->local;
+        }
+
+        return SchedulingResource::collection($schedulings);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

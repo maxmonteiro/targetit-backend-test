@@ -12,3 +12,4 @@ Route::apiResource('sectors', 'SectorController');
 Route::apiResource('locals', 'LocalController');
 Route::apiResource('rooms', 'RoomController');
 Route::apiResource('schedulings', 'SchedulingController');
+Route::post('schedulings/date', 'SchedulingController@schedulingsDay');

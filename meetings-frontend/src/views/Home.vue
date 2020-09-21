@@ -14,6 +14,7 @@
           ref="datepicker" 
           v-model="date" 
           :language="ptBR"
+          @closed="getSchedulings"
         ></datepicker>
         <button class="bg-light text-primary" data-toggle="modal" data-target="#addNew" @click="newScheduling">
           <i class="fa fa-plus"></i> Novo
@@ -154,7 +155,9 @@ export default {
       }
     },
     getSchedulings() {
-      axios.get('api/schedulings')
+      let newDate = moment(this.date).format('Y-MM-DD')
+      let obj = { date_scheduling: newDate }
+      axios.post('api/schedulings/date', obj)
       .then(({data}) => {
         this.schedulings = data.data
       }).catch((err) => {
