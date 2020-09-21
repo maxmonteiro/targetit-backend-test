@@ -53,22 +53,35 @@
           </div>
           <form @submit.prevent="!editMode ? createScheduling() : updateScheduling()">
             <div class="modal-body">
-                <label for="">Local</label>
-                <div class="form-group">
-                    <select type="text" name="local_id" class="form-control"
-                      v-model="selectedLocal"
-                      @change="getRooms"
-                    >
-                      <option value="">Selecione o local</option>
-                      <option v-for="local in locals" :key="local.id" :value="local.id">{{ local.name }}</option>
-                    </select>
+                <div class="form-group col-md">
+                  <label for="">Local</label>
+                  <select type="text" name="local_id" class="form-control"
+                    v-model="selectedLocal"
+                    @change="getRooms"
+                  >
+                    <option value="">Selecione o local</option>
+                    <option v-for="local in locals" :key="local.id" :value="local.id">{{ local.name }}</option>
+                  </select>
                 </div>
-                <label for="">Sala</label>
-                <div class="form-group">
-                    <select type="text" name="room_id" class="form-control">
-                      <option value="">Selecione uma sala</option>
-                      <option v-for="room in rooms" :key="room.id" :value="room.id">{{ room.name }}</option>
-                    </select>
+                <div class="form-group col-md">
+                  <label for="">Sala</label>
+                  <select type="text" name="room_id" class="form-control">
+                    <option value="">Selecione uma sala</option>
+                    <option v-for="room in rooms" :key="room.id" :value="room.id">{{ room.name }}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md">
+                  <label for="">Duração</label>
+                  <select type="text" name="" class="form-control">
+                    <option value="30">30 minutos</option>
+                    <option value="60">1 hora</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="">Hora de início</label>
+                  <select type="text" name="time_start" class="form-control">
+                    <option v-for="(time, index) in timeRange" :key="index" :value="time">{{ time | formatTime }}</option>
+                  </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -91,7 +104,7 @@ import moment from 'moment'
 export default {
   name: 'Home',
   components: {
-    Datepicker
+    Datepicker,
   },
   data() {
     return {
@@ -104,6 +117,7 @@ export default {
       form: {
         
       },
+      timeRange: [],
       editMode: false,
     }
   },
@@ -123,10 +137,22 @@ export default {
   mounted() {
     var dateToday = new Date()
     this.date = dateToday
+    this.setTimeRange()
     this.getSchedulings()
     this.getLocals()
   },
   methods: {
+    setTimeRange() {
+      for (var i = 1; i < 24; i++) {
+        var time = ''
+        if (i < 10) {
+          time = '0' + i + ':00:00'
+        } else {
+          time = i + ':00:00'
+        }
+        this.timeRange.push(time)
+      }
+    },
     getSchedulings() {
       axios.get('api/schedulings')
       .then(({data}) => {
@@ -156,6 +182,12 @@ export default {
       console.log('novo agendamento')
       this.editMode = false
       this.showModal = true
+      // Removendo da lista de horários os horários agendados
+      if (this.schedulings.length > 0) {
+        this.schedulings.map(value => {
+          this.timeRange.splice(this.timeRange.indexOf(value.time_start), 1)
+        })
+      }
     },
     createScheduling() {
 
