@@ -16,6 +16,10 @@ class SchedulingController extends Controller
     public function index()
     {
         $schedulings = Scheduling::all();
+        foreach ($schedulings as $value) {
+            $value->room->local;
+        }
+
         return SchedulingResource::collection($schedulings);
     }
 

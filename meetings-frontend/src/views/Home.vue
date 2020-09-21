@@ -23,11 +23,13 @@
 
     <div class="list-group col-md-8">
       <ul class="list-group list-group-flush">
-        <li v-for="scheduling in schedulings" :key="scheduling.id" class="list-group-item d-flex">
-          <p>{{ scheduling.time_start | formatTime }} às</p>
-          <p class="pl-1">{{ scheduling.time_end | formatTime }}</p>
-          <p class="ml-4">Euro Business</p>
-          <p class="ml-4">Sala 101</p>
+        <li v-for="scheduling in schedulings" :key="scheduling.id" class="list-group-item d-flex rounded">
+          <p>{{ scheduling.time_start | formatTime }} às {{ scheduling.time_end | formatTime }}</p>
+          <p class="ml-4">{{ scheduling.room.local.name }}</p>
+          <p class="ml-4 pr-2">{{ scheduling.room.name }}</p>
+          <span class="span-remove position-absolute pr-3" style="right: 0px; color: gray;">
+            <i class="fa fa-close"></i>
+          </span>
         </li>
       </ul>
     </div>
@@ -186,5 +188,13 @@ export default {
 }
 .vdp-datepicker >>> input {
   display: none;
+}
+.list-group li {
+  cursor: pointer;
+  border: 1px solid #fff;
+  transition: border 300ms;
+}
+.list-group li:hover {
+  border: 1px solid #ccc;
 }
 </style>

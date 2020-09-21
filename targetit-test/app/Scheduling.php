@@ -13,4 +13,9 @@ class Scheduling extends Model
         'user_id',
         'room_id'
     ];
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }
