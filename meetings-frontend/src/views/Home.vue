@@ -47,12 +47,12 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addNewLabel">{{ !editMode ? 'Novo Agendamento' : 'Editar Agendamento' }}</h5>
+            <h5 class="modal-title" id="addNewLabel">Novo Agendamento</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form @submit.prevent="!editMode ? createScheduling() : updateScheduling()">
+          <form @submit.prevent="createScheduling()">
             <div class="modal-body">
                 <div class="form-group col-md">
                   <label for="">Local</label>
@@ -232,7 +232,6 @@ export default {
       let scheduling = this.form
       axios.post('api/schedulings', scheduling)
       .then(({data}) => {
-        console.log(data.data)
         if ('message' in data.data) {
           alert(data.data.message)
         } else {
@@ -247,9 +246,6 @@ export default {
       }).catch((err) => {
         console.log(err)
       });
-    },
-    updateScheduling() {
-
     },
     deleteScheduling(scheduling) {
       axios.delete('api/schedulings/' + scheduling.id)
@@ -285,6 +281,10 @@ export default {
 }
 .vdp-datepicker >>> input {
   display: none;
+}
+.list-group {
+  height: 300px;
+  overflow-y: auto;
 }
 .list-group li {
   cursor: pointer;
