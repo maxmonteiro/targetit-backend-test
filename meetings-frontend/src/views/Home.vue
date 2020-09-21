@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="col-md-12">
     <h2>Agendamentos</h2>
 
-    <div class="card" style="width: 18rem; background-color: #9b59b6;"
+    <div class="card mb-4" style="width: 18rem; background-color: #9b59b6;"
       
     >
       <div class="card-body">
@@ -19,6 +19,17 @@
           <i class="fa fa-plus"></i> Novo
         </button>
       </div>
+    </div>
+
+    <div class="list-group col-md-8">
+      <ul class="list-group list-group-flush">
+        <li v-for="scheduling in schedulings" :key="scheduling.id" class="list-group-item d-flex">
+          <p>{{ scheduling.time_start | formatTime }} às</p>
+          <p class="pl-1">{{ scheduling.time_end | formatTime }}</p>
+          <p class="ml-4">Euro Business</p>
+          <p class="ml-4">Sala 101</p>
+        </li>
+      </ul>
     </div>
 
     <!-- Modal agendamento -->
@@ -85,8 +96,9 @@ export default {
       ptBR: ptBR,
       date: '',
       locals: [],
-      selectedLocal: '',
       rooms: [],
+      schedulings: [],
+      selectedLocal: '',
       form: {
         
       },
@@ -101,15 +113,26 @@ export default {
     dayWeek: (val) => {
       var date = new Date(val)
       return moment(date).locale('pt-br').format('dddd')
+    },
+    formatTime: (val) => {
+      return val.substring(0,5)
     }
   },
   mounted() {
     var dateToday = new Date()
     this.date = dateToday
-
+    this.getSchedulings()
     this.getLocals()
   },
   methods: {
+    getSchedulings() {
+      axios.get('api/schedulings')
+      .then(({data}) => {
+        this.schedulings = data.data
+      }).catch((err) => {
+        console.log(err)
+      });
+    },
     getLocals() {
       axios.get('api/locals')
       .then(({data}) => {
