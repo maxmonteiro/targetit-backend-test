@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import SignIn from '../views/SignIn.vue'
-import Users from '../views/Users.vue'
 import Locals from '../views/Locals.vue'
+import Sectors from '../views/Sectors.vue'
+import Users from '../views/Users.vue'
 
 Vue.use(VueRouter)
 
@@ -23,15 +24,20 @@ const routes = [
     component: Home
   },
   {
+    path: '/locals',
+    name: 'locals',
+    component: Locals
+  },
+  {
+    path: '/sectors',
+    name: 'sectors',
+    component: Sectors
+  },
+  {
     path: '/users',
     name: 'users',
     component: Users
   },
-  {
-    path: '/locals',
-    name: 'locals',
-    component: Locals
-  }
 ]
 
 const router = new VueRouter({
