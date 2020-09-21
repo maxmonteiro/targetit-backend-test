@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav :style="this.$route.name == 'signin' ? 'display: none!important;' : ''" class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company name</a>
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Awesome meetings</a>
             <button
                 class="navbar-toggler position-absolute d-md-none collapsed "
                 type="button"
@@ -15,7 +15,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <ul :style="this.$route.name == 'signin' ? 'display: none!important;' : ''"
-                class="navbar-nav d-flex flex-row bd-highlight"
+                class="navbar-nav d-flex flex-row bd-highlight pl-3"
             >
                 <li class="nav-item mr-2 text-nowrap">
                     <a class="nav-link" href="#" @click.prevent="logout">

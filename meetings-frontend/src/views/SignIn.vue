@@ -3,22 +3,22 @@
     <form class="col-lg-4 col-md-8 text-center m-auto" 
       @submit.prevent="submit"
     >
-      <h2>Login</h2>
-      <h4 class="h4 mb-3 font-weight-normal">Digite seus dados de acesso</h4>
+      <div class="form-header text-center">
+        <h5>Login</h5>
+        <p class="mb-3 font-weight-normal">Digite seus dados de acesso</p>
+      </div>
 
-      <label for="inputEmail" class="sr-only">
-        Endereço de e-mail
-      </label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus
-        v-model="form.email"
-      />
-
-      <label for="inputPassword" class="sr-only">
-        Senha
-      </label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required
-        v-model="form.password"
-      />
+      <div class="form-group">
+        <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus
+          v-model="form.email"
+        />
+      </div>
+      
+      <div class="form-group">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required
+          v-model="form.password"
+        />
+      </div>
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Entrar
@@ -72,3 +72,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+form {
+  margin-top: 100px !important;
+}
+</style>
