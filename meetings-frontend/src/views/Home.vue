@@ -24,7 +24,7 @@
 
     <div class="list-group col-md-8">
       <ul class="list-group list-group-flush">
-        <li v-for="scheduling in schedulings" :key="scheduling.id" class="list-group-item d-flex rounded">
+        <li v-for="scheduling in schedulings" :key="scheduling.id" class="list-group-item d-flex pb-1 rounded">
           <p>{{ scheduling.time_start | formatTime }} às {{ scheduling.time_end | formatTime }}</p>
           <p class="ml-4">{{ scheduling.room.local.name }}</p>
           <p class="ml-4 pr-2">{{ scheduling.room.name }}</p>
@@ -66,27 +66,34 @@
                 </div>
                 <div class="form-group col-md">
                   <label for="">Sala</label>
-                  <select type="text" name="room_id" class="form-control">
+                  <select type="text" name="room_id" class="form-control"
+                    v-model="form.room_id"
+                  >
                     <option value="">Selecione uma sala</option>
                     <option v-for="room in rooms" :key="room.id" :value="room.id">{{ room.name }}</option>
                   </select>
                 </div>
-                <div class="form-group col-md">
+                <div class="form-group col-md-4">
                   <label for="">Duração</label>
-                  <select type="text" name="" class="form-control">
+                  <select type="text" name="" class="form-control"
+                    v-model="selectedDuration"
+                  >
                     <option value="30">30 minutos</option>
                     <option value="60">1 hora</option>
                   </select>
                 </div>
                 <div class="form-group col-md-4">
                   <label for="">Hora de início</label>
-                  <select type="text" name="time_start" class="form-control">
+                  <select type="text" name="time_start" class="form-control"
+                    v-model="form.time_start"
+                    @change="setTimeEnd"
+                  >
                     <option v-for="(time, index) in timeRange" :key="index" :value="time">{{ time | formatTime }}</option>
                   </select>
                 </div>
             </div>
             <div class="modal-footer">
-              <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal" @click="resetForm">Fechar</button>
               <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
           </form>
@@ -116,8 +123,13 @@ export default {
       rooms: [],
       schedulings: [],
       selectedLocal: '',
+      selectedDuration: '30',
       form: {
-        
+        date_scheduling: '',
+        time_start: '',
+        time_end: '',
+        room_id: '',
+        user_id: null
       },
       timeRange: [],
       editMode: false,
@@ -160,6 +172,7 @@ export default {
         axios.get('api/auth/me')
         .then(({data}) => {
             this.user = data.data
+            this.form.user_id = data.data.id
         }).catch((err) => {
             console.log(err)
         });
@@ -191,6 +204,11 @@ export default {
     openDatepicker() {
       this.$refs.datepicker.showCalendar()
     },
+    resetForm() {
+      this.form.time_start = ''
+      this.form.time_end = ''
+      this.form.room_id = ''
+    },
     newScheduling() {
       console.log('novo agendamento')
       this.editMode = false
@@ -201,9 +219,34 @@ export default {
           this.timeRange.splice(this.timeRange.indexOf(value.time_start), 1)
         })
       }
+      // Setando data no formulário
+      this.form.date_scheduling = moment(this.date).format('Y-MM-DD')
+    },
+    setTimeEnd() {
+      let duration = parseInt(this.selectedDuration)
+      let time_total = moment(moment(this.date).format('Y-MM-DD') + ' ' + this.form.time_start).add(duration, 'minutes').format('HH:mm:ss')
+      this.form.time_end = time_total
+      console.log(duration)
     },
     createScheduling() {
-
+      let scheduling = this.form
+      axios.post('api/schedulings', scheduling)
+      .then(({data}) => {
+        console.log(data.data)
+        if ('message' in data.data) {
+          alert(data.data.message)
+        } else {
+          axios.get('api/schedulings/' + data.data.id)
+          .then(({data}) => {
+            this.schedulings.push(data.data)
+          }).catch((err) => {
+            console.log(err)
+          });
+        }        
+        document.getElementById("closeModal").click()
+      }).catch((err) => {
+        console.log(err)
+      });
     },
     updateScheduling() {
 

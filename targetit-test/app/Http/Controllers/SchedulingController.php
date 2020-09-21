@@ -73,7 +73,7 @@ class SchedulingController extends Controller
             }
         } else {
             $data = array(
-                'message' => 'Usuario possui agendamento.'
+                'message' => 'Usuario possui reserva neste dia.'
             );
             return response(json_encode(compact('data')), 202);
         }
@@ -89,6 +89,7 @@ class SchedulingController extends Controller
     public function show($id)
     {
         $scheduling = Scheduling::findOrFail($id);
+        $scheduling->room->local;
         return new SchedulingResource($scheduling);
     }
 
