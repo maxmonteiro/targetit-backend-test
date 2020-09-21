@@ -23,6 +23,13 @@ class SchedulingController extends Controller
         return SchedulingResource::collection($schedulings);
     }
 
+
+    /**
+     * Display the schedulings of a specified date.
+     *
+     * @param  $request
+     * @return \Illuminate\Http\Response
+     */
     public function schedulingsDay(Request $request)
     {
         $date = $request->input('date_scheduling');
@@ -42,16 +49,35 @@ class SchedulingController extends Controller
      */
     public function store(Request $request)
     {
-        $scheduling = new Scheduling;
-        $scheduling->date_scheduling = $request->input('date_scheduling');
-        $scheduling->time_start = $request->input('time_start');
-        $scheduling->time_end = $request->input('time_end');
-        $scheduling->user_id = $request->input('user_id');
-        $scheduling->room_id = $request->input('room_id');
+        $has_scheduling = false;
+        $user = $request->input('user_id');
+        $date_scheduling = $request->input('date_scheduling');
 
-        if ($scheduling->save()) {
-            return new SchedulingResource($scheduling);
+        $schedulings = Scheduling::all();
+        foreach ($schedulings as $value) {
+            if ($value->user_id == $user && $value->date_scheduling == $date_scheduling) {
+                $has_scheduling = true;
+            }
         }
+
+        if (!$has_scheduling) {
+            $scheduling = new Scheduling;
+            $scheduling->date_scheduling = $request->input('date_scheduling');
+            $scheduling->time_start = $request->input('time_start');
+            $scheduling->time_end = $request->input('time_end');
+            $scheduling->user_id = $request->input('user_id');
+            $scheduling->room_id = $request->input('room_id');
+
+            if ($scheduling->save()) {
+                return new SchedulingResource($scheduling);
+            }
+        } else {
+            $data = array(
+                'message' => 'Usuario possui agendamento.'
+            );
+            return response(json_encode(compact('data')), 202);
+        }
+
     }
 
     /**

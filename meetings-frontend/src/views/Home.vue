@@ -109,6 +109,7 @@ export default {
   },
   data() {
     return {
+      user: {},
       ptBR: ptBR,
       date: '',
       locals: [],
@@ -141,6 +142,7 @@ export default {
     this.setTimeRange()
     this.getSchedulings()
     this.getLocals()
+    this.getUser()
   },
   methods: {
     setTimeRange() {
@@ -153,6 +155,14 @@ export default {
         }
         this.timeRange.push(time)
       }
+    },
+    getUser() {
+        axios.get('api/auth/me')
+        .then(({data}) => {
+            this.user = data.data
+        }).catch((err) => {
+            console.log(err)
+        });
     },
     getSchedulings() {
       let newDate = moment(this.date).format('Y-MM-DD')
