@@ -1,10 +1,14 @@
 # meetings-frontend
 
+## Introdução
+Front-end do sistema de agendamentos desenvolvido em Vue.js.
+
 ## Instalação
 Execute o comando para instalar as dependências do projeto.
 ```
 npm install
 ```
+
 
 ## Compilando
 ### Local
