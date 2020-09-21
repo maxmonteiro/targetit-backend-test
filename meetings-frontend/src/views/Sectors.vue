@@ -130,7 +130,7 @@ export default {
             });
         },
         deleteSector(sector) {
-            if (sector.users.length > 0) {
+            if (sector.users != undefined && sector.users.length > 0) {
                 alert('Não é possível excluir Setor. Existem usuários associados!')
             } else {
                 axios.delete('api/sectors/' + sector.id)
