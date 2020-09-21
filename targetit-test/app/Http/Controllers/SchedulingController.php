@@ -15,7 +15,8 @@ class SchedulingController extends Controller
      */
     public function index()
     {
-        //
+        $schedulings = Scheduling::all();
+        return SchedulingResource::collection($schedulings);
     }
 
     /**
@@ -46,7 +47,8 @@ class SchedulingController extends Controller
      */
     public function show($id)
     {
-        //
+        $scheduling = Scheduling::findOrFail($id);
+        return new SchedulingResource($scheduling);
     }
 
     /**
@@ -58,7 +60,16 @@ class SchedulingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $scheduling = Scheduling::findOrFail($id);
+        $scheduling->date_scheduling = $request->input('date_scheduling');
+        $scheduling->time_start = $request->input('time_start');
+        $scheduling->time_end = $request->input('time_end');
+        $scheduling->user_id = $request->input('user_id');
+        $scheduling->room_id = $request->input('room_id');
+
+        if ($scheduling->save()) {
+            return new SchedulingResource($scheduling);
+        }
     }
 
     /**
@@ -69,6 +80,9 @@ class SchedulingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $scheduling = Scheduling::findOrFail($id);
+        $scheduling->delete();
+
+        return new SchedulingResource($scheduling);
     }
 }
