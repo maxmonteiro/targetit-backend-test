@@ -27,7 +27,7 @@
           <p>{{ scheduling.time_start | formatTime }} às {{ scheduling.time_end | formatTime }}</p>
           <p class="ml-4">{{ scheduling.room.local.name }}</p>
           <p class="ml-4 pr-2">{{ scheduling.room.name }}</p>
-          <span class="span-remove position-absolute pr-3" style="right: 0px; color: gray;">
+          <span class="span-remove position-absolute pr-3" style="right: 0px; color: gray;" @click.stop="deleteScheduling(scheduling)">
             <i class="fa fa-close"></i>
           </span>
         </li>
@@ -162,6 +162,15 @@ export default {
     },
     updateScheduling() {
 
+    },
+    deleteScheduling(scheduling) {
+      axios.delete('api/schedulings/' + scheduling.id)
+      .then(({data}) => {
+          console.log('excluido', data)
+          this.schedulings.splice(this.schedulings.indexOf(scheduling), 1)
+      }).catch((err) => {
+          console.log(err)
+      });
     }
   }
 }
