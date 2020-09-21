@@ -129,9 +129,9 @@ export default {
                 console.log(err)
             });
         },
-        deleteLocal(sector) {
+        deleteSector(sector) {
             if (sector.users.length > 0) {
-                alert('Não é possível excluir local. Existem salas associadas!')
+                alert('Não é possível excluir Setor. Existem usuários associados!')
             } else {
                 axios.delete('api/sectors/' + sector.id)
                 .then(({data}) => {

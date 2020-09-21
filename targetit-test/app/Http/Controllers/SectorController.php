@@ -16,6 +16,9 @@ class SectorController extends Controller
     public function index()
     {
         $sectors = Sector::all();
+        foreach ($sectors as $value) {
+            $value->users;
+        }
         return SectorResource::collection($sectors);
     }
 
@@ -40,6 +43,7 @@ class SectorController extends Controller
     public function show($id)
     {
         $sector = Sector::findOrFail($id);
+        $sector->users;
         return new SectorResource($sector);
     }
 
