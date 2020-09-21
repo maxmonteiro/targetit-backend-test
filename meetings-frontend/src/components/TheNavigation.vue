@@ -32,9 +32,9 @@
                     <div class="sidebar-sticky pt-3">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <span><i class="fa fa-home text-primary"></i></span>
+                                <span><i class="fa fa-calendar text-primary"></i></span>
                                 <router-link class="nav-link" :to="{ name: 'home' }">
-                                    Home
+                                    Agendamentos
                                 </router-link>
                             </li>
                             <li class="nav-item">
