@@ -11,3 +11,4 @@ Route::apiResource('users', 'UserController');
 Route::apiResource('sectors', 'SectorController');
 Route::apiResource('locals', 'LocalController');
 Route::apiResource('rooms', 'RoomController');
+Route::apiResource('schedulings', 'SchedulingController');
