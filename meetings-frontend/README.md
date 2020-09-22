@@ -17,9 +17,15 @@ Execute o comando para rodar e acessar o sistema localmente através da url info
 ```
 npm run serve
 ```
+- Acesse através da url ```http://localhost:8080```
+- Usuário padrão após configurar a API
+```
+maximo@teste.com
+123456
+```
+
 ### Produção
 Execute o comando para gerar uma compilação de produção e minificada.
 ```
 npm run build
 ```
-

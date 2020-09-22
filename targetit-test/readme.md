@@ -42,3 +42,10 @@ Será criado um usuário padrão
 email: maximo@teste.com
 senha: 123456
 ```
+
+## Executando localmente
+Execute o comando
+```
+php artisan serve
+```
+O sistema estará rodando sob a url ```http://127.0.0.1:8000```
