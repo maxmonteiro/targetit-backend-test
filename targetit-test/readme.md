@@ -33,6 +33,12 @@ php artisan jwt:secret
 ```
 php artisan migrate
 ```
-- Execute as Seeds, será criado um usuário padrão
+- Execute as Seeds
+```
+php artisan db:seed
+```
+Será criado um usuário padrão
+```
 email: maximo@teste.com
 senha: 123456
+```
